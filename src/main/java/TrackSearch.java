@@ -21,7 +21,6 @@ public class TrackSearch{
     private static final SpotifyApi spotifyApi = new SpotifyApi.Builder()
             .setClientId(clientId)
             .setClientSecret(clientSecret)
-            .setAccessToken("BQAG-_iWwdisBCRSolK9HWJLbSMWRpeZ4udl1Kq_KGI6yDHIarKS0JKXFSHGi8ydyztRol_7NFKdV0s6rJc")
             .build();
     private static final ClientCredentialsRequest clientCredentialsRequest = spotifyApi.clientCredentials()
             .build();

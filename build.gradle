@@ -1,0 +1,20 @@
+plugins {
+    id 'java'
+}
+
+group 'jetbrains'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://jitpack.io' 
+    }
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile 'se.michaelthelin.spotify:spotify-web-api-java:2.1.2'
+}

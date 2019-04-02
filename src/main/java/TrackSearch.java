@@ -14,12 +14,6 @@ import java.util.concurrent.Future;
 
 public class TrackSearch{
 
-    public static void main(String[] args){
-
-        searchTracks();
-
-    }
-
 
     private static final String clientId = "2c3d2a8e718e432880b2601c0fc248a9";
     private static final String clientSecret = "39ec4e439d734605bf1a6be4ddffcc15";
@@ -34,8 +28,9 @@ public class TrackSearch{
 
 
 
-    public static void searchTracks() {
+    public static Track[] searchTracks(String searchTerm, int amtOfRes) {
         try {
+
             final ClientCredentials clientCredentials = clientCredentialsRequest.execute();
 
             // Set access token for further "spotifyApi" object usage
@@ -45,20 +40,26 @@ public class TrackSearch{
                     .setAccessToken(clientCredentials.getAccessToken())
                     .build();
 
-            //calls private helper method
-            searchTracks(api);
-
             System.out.println("Expires in: " + clientCredentials.getExpiresIn());
-        } catch (IOException | SpotifyWebApiException e) {
+
+            //calls private helper method
+            return searchTracks(searchTerm, api, amtOfRes);
+
+        }
+
+        catch (IOException | SpotifyWebApiException e) {
+
             System.out.println("Error: " + e.getMessage());
+            return null;
+
         }
     }
 
     //private helper method
-    private static void searchTracks(SpotifyApi api) {
+    private static Track[] searchTracks(String searchTerm, SpotifyApi api, int amtOfRes) {
         try {
-
-            final SearchTracksRequest searchTracksRequest = api.searchTracks("another")
+            final Track[] topRes = new Track[amtOfRes];
+            final SearchTracksRequest searchTracksRequest = api.searchTracks(searchTerm)
                     .market(CountryCode.US)
                     .limit(10)
                     .offset(0)
@@ -66,9 +67,21 @@ public class TrackSearch{
 
             final Paging<Track> trackPaging = searchTracksRequest.execute();
 
-            System.out.println("Total: " + trackPaging.getItems()[1].getName());
-        } catch (IOException | SpotifyWebApiException e) {
+            System.out.println("Total: " + trackPaging.getTotal());
+            for(int i = 0; i < amtOfRes; i++){
+
+                topRes[i] = trackPaging.getItems()[i];
+            }
+
+            return topRes;
+
+        }
+
+        catch (IOException | SpotifyWebApiException e) {
+
             System.out.println("Error: " + e.getMessage());
+            return null;
+
         }
     }
 

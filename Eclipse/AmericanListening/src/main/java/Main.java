@@ -8,7 +8,8 @@ import java.awt.event.ActionListener;
 public class Main {
 
     private static final int AMT_OF_TOP_RES = 5;    //limited to 10 in TrackSearch class
-    private static final String searchTerm = "my love";
+    private static final String searchTerm = "blood on the leaves";
+    private static final int I = 0; 	//Selected by the user on web site
 
     public static void main(String[] args){
 
@@ -50,7 +51,7 @@ public class Main {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                label.setText(topRes[0].getName());
+                label.setText(topRes[I].getName());
                 ok.setEnabled(true);
             }
         });
@@ -60,6 +61,18 @@ public class Main {
             public void actionPerformed(ActionEvent e) {
 
 
+            	if((timeMin.getText().equals("")) || ((timeSec.getText().equals("")))) {
+            		
+            		System.out.println("Fill all fields");
+            	}
+            	else {
+            		
+            		int timeInMilli = (Integer.parseInt(timeMin.getText()) * 60000) + (Integer.parseInt(timeSec.getText()) * 1000);
+            		
+            		Stamp stampObj = new Stamp(0, timeInMilli, topRes[I].getName(), topRes[I].getArtists()[0].getName(), topRes[I].getAlbum().getName(), topRes[I].getAlbum().getImages()[0].getUrl());
+            		System.out.println(stampObj.toString());
+            		
+            	}
             }
         });
     }

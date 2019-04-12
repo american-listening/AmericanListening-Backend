@@ -13,15 +13,15 @@ public class Main {
 
     public static void main(String[] args){
 
-        JButton findSong = new JButton("Find Song");
-        JLabel label = new JLabel("Nothing", JLabel.CENTER);
-        JLabel time = new JLabel("Time");
-        JTextField timeMin = new JTextField();
-        JLabel colon = new JLabel(":");
-        JTextField timeSec = new JTextField();
-        JButton ok = new JButton("Submit");
+        final JButton findSong = new JButton("Find Song");
+        final JLabel label = new JLabel("Nothing", JLabel.CENTER);
+        final JLabel time = new JLabel("Time");
+        final JTextField timeMin = new JTextField();
+        final JLabel colon = new JLabel(":");
+        final JTextField timeSec = new JTextField();
+        final JButton ok = new JButton("Submit");
         ok.setEnabled(false);
-        JFrame frame = new JFrame ("App");
+        final JFrame frame = new JFrame ("App");
 
         frame.setLayout(new GridLayout(3, 4, 5, 10));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

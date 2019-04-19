@@ -1,0 +1,12 @@
+    
+apply plugin: "com.bmuschko.tomcat"
+
+apply plugin: "idea"
+apply plugin: "project-report"
+apply plugin: "war"
+
+task showPlugins {
+  project.plugins.each {
+    println ("Available plugin: $it")
+  }
+}

@@ -1,6 +1,8 @@
 package com.americanlistening.core;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Class containing information about a user.
@@ -24,6 +26,7 @@ public class User {
 	// Possible public profile attributes
 	private Location location;
 	private int age;
+	private Map<Long, Event> eventHistory;
 
 	// Private profile attributes - used to login
 	private String email;
@@ -36,6 +39,7 @@ public class User {
 	 */
 	public User(long id) {
 		this.id = id;
+		eventHistory = new HashMap<>();
 	}
 
 	/**
@@ -213,6 +217,24 @@ public class User {
 	 */
 	public long[] getFollowerIDs() {
 		return null;
+	}
+	
+	/**
+	 * Records an event.
+	 * 
+	 * @param evt The event to record.
+	 */
+	public void putEvent(Event evt) {
+		eventHistory.put(evt.time, evt);
+	}
+	
+	/**
+	 * Returns the event history for this user.
+	 * 
+	 * @return The event history.
+	 */
+	public Map<Long, Event> getEventHistory() {
+		return eventHistory;
 	}
 
 	@Override

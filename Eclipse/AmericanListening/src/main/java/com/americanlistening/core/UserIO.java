@@ -1,9 +1,13 @@
 package com.americanlistening.core;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
 
 /**
  * Handles user input/output in files.
@@ -40,6 +44,7 @@ public class UserIO {
 		out.println("location=" + user.getLocation());
 		out.println("age=" + user.getAge());
 		out.println("email=" + user.getEmail());
+		out.println("history=" + user.getEventHistory().values().toString());
 		out.flush();
 		out.close();
 	}
@@ -54,7 +59,16 @@ public class UserIO {
 	 *             When an I/O error occurs.
 	 */
 	public static User readUser(File file) throws IOException {
-		throw new UnsupportedOperationException("Not supported yet.");
+		if (!file.exists())
+			throw new FileNotFoundException("Nonexistent file " + file.getAbsolutePath());
+		if (file.isDirectory())
+			throw new FileNotFoundException(file.getAbsolutePath() + " is not a file.");
+		List<String> lines = new ArrayList<>();
+		Scanner in = new Scanner(file);
+		while (in.hasNextLine()) {
+			lines.add(in.nextLine());
+		}
+		in.close();
 	}
 	
 	private UserIO() { }

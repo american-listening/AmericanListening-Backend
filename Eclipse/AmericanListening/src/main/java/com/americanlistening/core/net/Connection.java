@@ -28,6 +28,19 @@ public interface Connection {
 	public OutputStream outputStream();
 
 	/**
+	 * Starts the client's loop.
+	 */
+	public void start();
+
+	/**
+	 * Stops the connection and disconnections.
+	 * 
+	 * @throws IOExeption
+	 *             When an I/O error occurs.
+	 */
+	public void stop() throws IOException;
+
+	/**
 	 * Forces any outstanding bytes in the connection's output stream to be written.
 	 * This method is effectively equivalent to <code>outputStream().flush()</code>
 	 * and serves as a convenience.
@@ -73,7 +86,32 @@ public interface Connection {
 	/**
 	 * Returns the port of this connection.
 	 * 
-	 * @return The port, or <code>-1</code> if the object is not connected.
+	 * @return The port, or <code>-1</code> if the object is not connected or the
+	 *         connection is closed.
 	 */
 	public int getPort();
+
+	/**
+	 * Adds an input callback to this connection.
+	 * 
+	 * @param callback
+	 *            The callback to add;
+	 */
+	public void addInputCallback(InputCallback callback);
+
+	/**
+	 * Adds an error callback to this connection.
+	 * 
+	 * @param callback
+	 *            The callback to add.
+	 */
+	public void addErrorCallback(ErrorCallback callback);
+
+	/**
+	 * Returns the current client session.
+	 * 
+	 * @return The session to return. Returns <code>null</code> if the connection is
+	 *         server-side.
+	 */
+	public ClientSession getSession();
 }

@@ -15,20 +15,29 @@ import java.util.Set;
 public class Sessions {
 
 	/**
-	 * Creates a new sessions object.
-	 * 
-	 * @param seed
-	 *            The seed for the session generator to use.
-	 * @return The new object.
+	 * Default seed.
 	 */
-	public static Sessions createNew(long seed) {
-		return new Sessions(seed);
+	public static final long DEFAULT_SEED = 0L;
+
+	static {
+		defaultSessions = new Sessions(DEFAULT_SEED);
 	}
+
+	/**
+	 * The default sessions object.
+	 */
+	public static final Sessions defaultSessions;
 
 	private Map<Long, ClientSession> sessions;
 	private Random r;
 
-	private Sessions(long seed) {
+	/**
+	 * Creates a new sessions object.
+	 * 
+	 * @param seed
+	 *            The seed to use for the ID generator.
+	 */
+	public Sessions(long seed) {
 		sessions = new HashMap<>();
 		r = new Random(seed);
 	}

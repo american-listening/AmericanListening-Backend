@@ -159,7 +159,8 @@ public class Instance {
 	/**
 	 * Saves all data.
 	 */
-	public void saveAll() {
+	public boolean saveAll() {
+		boolean suc = true;
 		Collection<User> uset = users.values();
 		int saved = 0;
 		for (User user : uset) {
@@ -169,6 +170,7 @@ public class Instance {
 			} catch (IOException e) {
 				logger.log(Level.WARNING, "Failed to save user " + user + " " + e);
 				logger.log(Level.FINE, null, e);
+				suc = false;
 			}
 		}
 		logger.log(Level.INFO, "Saved " + saved + " users.");
@@ -182,9 +184,11 @@ public class Instance {
 			} catch (IOException e) {
 				logger.log(Level.WARNING, "Failed to save playlist " + playlist + " " + e);
 				logger.log(Level.FINE, null, e);
+				suc = false;
 			}
 		}
 		logger.log(Level.INFO, "Saved " + saved + " playlists.");
+		return suc;
 	}
 
 	/**

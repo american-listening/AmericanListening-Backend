@@ -22,5 +22,7 @@ public class TestMain {
 		//inst.logger.log(Level.INFO, user.toString());
 		
 		inst.saveAll();
+		
+		//throw new NullPointerException("test");
 	}
 }

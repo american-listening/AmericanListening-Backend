@@ -27,17 +27,17 @@ public class Instance {
 	/**
 	 * The subdirectory for all data.
 	 */
-	public static final String DATA_SUBDIRECTORY = "data\\";
+	public static final String DATA_SUBDIRECTORY = "data";
 
 	/**
 	 * The subdirectory for user data.
 	 */
-	public static final String USER_SUBDIRECTORY = "users\\";
+	public static final String USER_SUBDIRECTORY = "users";
 
 	/**
 	 * The subdirectory for playlist data.
 	 */
-	public static final String PLAYLIST_SUBDIRECTORY = "playlists\\";
+	public static final String PLAYLIST_SUBDIRECTORY = "playlists";
 
 	/**
 	 * Creates a new instance.
@@ -100,7 +100,7 @@ public class Instance {
 		path = path == null ? "" : path;
 
 		// Load users
-		File userDir = new File(path + DATA_SUBDIRECTORY + USER_SUBDIRECTORY);
+		File userDir = new File(path + DATA_SUBDIRECTORY + File.separator + USER_SUBDIRECTORY + File.separator);
 		if (!userDir.exists())
 			userDir.mkdirs();
 		File[] userFiles = userDir.listFiles();
@@ -114,7 +114,7 @@ public class Instance {
 		}
 
 		// Load playlists
-		File playlistDir = new File(path + DATA_SUBDIRECTORY + PLAYLIST_SUBDIRECTORY);
+		File playlistDir = new File(path + DATA_SUBDIRECTORY + File.separator + PLAYLIST_SUBDIRECTORY + File.separator);
 		if (!playlistDir.exists())
 			playlistDir.mkdirs();
 		File[] playlistFiles = playlistDir.listFiles();
@@ -145,7 +145,9 @@ public class Instance {
 	 * @throws IOException When an I/O error occurs.
 	 */
 	public void saveUser(User user) throws IOException {
-		File outp = new File(path + DATA_SUBDIRECTORY + USER_SUBDIRECTORY + user.id + ".udata");
+		File outp = new File(path + DATA_SUBDIRECTORY + File.separator + USER_SUBDIRECTORY + File.separator + user.id + ".udata");
+		System.out.println(path + DATA_SUBDIRECTORY + File.separator + USER_SUBDIRECTORY + File.separator + user.id + ".udata");
+		
 		UserIO.writeUser(user, outp);
 	}
 

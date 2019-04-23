@@ -78,11 +78,17 @@ class SSLServer implements Server {
 
 	@Override
 	public void stop() throws IOException {
+		shouldRun = false;
 		server.close();
 	}
 
 	@Override
 	public void addErrorCallback(ErrorCallback callback) {
 		eCalls.add(callback);
+	}
+	
+	@Override
+	public String toString() {
+		return "SSLServer[port=" + server.getLocalPort() + "]";
 	}
 }

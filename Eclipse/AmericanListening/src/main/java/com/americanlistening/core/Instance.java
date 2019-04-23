@@ -156,9 +156,7 @@ public class Instance {
 	 * @throws IOException When an I/O error occurs.
 	 */
 	public void saveUser(User user) throws IOException {
-		File outp = new File(path + DATA_SUBDIRECTORY + File.separator + USER_SUBDIRECTORY + File.separator + user.id + ".udata");
-		System.out.println(path + DATA_SUBDIRECTORY + File.separator + USER_SUBDIRECTORY + File.separator + user.id + ".udata");
-		
+		File outp = new File(path + DATA_SUBDIRECTORY + File.separator + USER_SUBDIRECTORY + File.separator + user.id + ".udata");		
 		UserIO.writeUser(user, outp);
 	}
 

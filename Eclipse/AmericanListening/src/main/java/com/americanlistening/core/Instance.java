@@ -12,6 +12,10 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.americanlistening.core.net.Server;
+import com.americanlistening.core.net.ServerFactory;
+import com.americanlistening.core.net.Sessions;
+
 /**
  * An instance is the base functionality class for the platform.
  * 
@@ -38,10 +42,8 @@ public class Instance {
 	/**
 	 * Creates a new instance.
 	 * 
-	 * @param instanceName
-	 *            The name of the instance.
-	 * @param path
-	 *            The working directory of the instance.
+	 * @param instanceName The name of the instance.
+	 * @param path         The working directory of the instance.
 	 * @return The new instance.
 	 */
 	public static Instance createInstance(String instanceName, String path) {
@@ -59,7 +61,11 @@ public class Instance {
 	private Map<Long, User> users;
 	private Map<Long, Playlist> playlists;
 
+	private Sessions clientSessions;
+
 	private Random userGenerator;
+
+	private Server server;
 
 	// TODO: Implement playlists
 	// private Map<Long, Playlist> playlists;
@@ -71,6 +77,7 @@ public class Instance {
 		this.playlists = new HashMap<>();
 		this.logger = Logger.getLogger(name);
 		this.userGenerator = new Random();
+		this.clientSessions = new Sessions(new Random().nextLong());
 		Thread.setDefaultUncaughtExceptionHandler(new UnhandledExceptionHandler(this));
 	}
 
@@ -86,10 +93,8 @@ public class Instance {
 	/**
 	 * Loads all data from path <code>path</code>.
 	 * 
-	 * @param path
-	 *            The path to load from.
-	 * @throws IOException
-	 *             When an I/O error occurs.
+	 * @param path The path to load from.
+	 * @throws IOException When an I/O error occurs.
 	 */
 	public void load(String path) throws IOException {
 		path = path == null ? "" : path;
@@ -101,6 +106,10 @@ public class Instance {
 		File[] userFiles = userDir.listFiles();
 		for (File file : userFiles) {
 			User us = UserIO.readUser(file);
+			if (us == null) {
+				logger.log(Level.WARNING, "null user loaded.");
+				continue;
+			}
 			users.put(us.id, us);
 		}
 
@@ -118,8 +127,7 @@ public class Instance {
 	/**
 	 * Creates a new user with email <code>email</code>.
 	 * 
-	 * @param email
-	 *            The email.
+	 * @param email The email.
 	 * @return The new user.
 	 */
 	public User createUser(String email) {
@@ -133,10 +141,8 @@ public class Instance {
 	/**
 	 * Saves user <code>user</code> to a file.
 	 * 
-	 * @param user
-	 *            The user to save.
-	 * @throws IOException
-	 *             When an I/O error occurs.
+	 * @param user The user to save.
+	 * @throws IOException When an I/O error occurs.
 	 */
 	public void saveUser(User user) throws IOException {
 		File outp = new File(path + DATA_SUBDIRECTORY + USER_SUBDIRECTORY + user.id + ".udata");
@@ -146,16 +152,14 @@ public class Instance {
 	/**
 	 * Saves playlist <code>playlist</code> to a file.
 	 * 
-	 * @param playlist
-	 *            The playlist to save.
-	 * @throws IOException
-	 *             When an I/O error occurs.
+	 * @param playlist The playlist to save.
+	 * @throws IOException When an I/O error occurs.
 	 */
 	public void savePlaylist(Playlist playlist) throws IOException {
 		File outp = new File(path + DATA_SUBDIRECTORY + PLAYLIST_SUBDIRECTORY + playlist.id + ".pdata");
 		PlaylistIO.writePlaylist(playlist, outp);
 	}
-	
+
 	/**
 	 * Saves all data.
 	 */
@@ -174,7 +178,7 @@ public class Instance {
 			}
 		}
 		logger.log(Level.INFO, "Saved " + saved + " users.");
-		
+
 		saved = 0;
 		Collection<Playlist> pset = playlists.values();
 		for (Playlist playlist : pset) {
@@ -194,8 +198,7 @@ public class Instance {
 	/**
 	 * Returns a user of id <code>id</code>.
 	 * 
-	 * @param id
-	 *            The user id.
+	 * @param id The user id.
 	 * @return The respective user, or <code>null</code> if it doesn't exist.
 	 */
 	public User getUser(long id) {
@@ -206,8 +209,7 @@ public class Instance {
 	 * Returns users with username <code>username</code>, ignoring capitalization.
 	 * If capitalization must be compared, use <code>usersWithExplicitName</code>.
 	 * 
-	 * @param username
-	 *            The username to test for.
+	 * @param username The username to test for.
 	 * @return The users with username <code>username</code>.
 	 */
 	public User[] usersWithName(String username) {
@@ -226,8 +228,7 @@ public class Instance {
 	 * Returns users with username <code>username</code>, comparing capitalization.
 	 * If capitalization shouldn't be compared, use <code>usersWithName</code>.
 	 * 
-	 * @param username
-	 *            The username to test for.
+	 * @param username The username to test for.
 	 * @return The users with username <code>username</code>.
 	 */
 	public User[] usersWithExplicitName(String username) {
@@ -240,5 +241,33 @@ public class Instance {
 		User[] userarr = new User[userLs.size()];
 		userarr = userLs.toArray(userarr);
 		return userarr;
+	}
+
+	/**
+	 * Returns the object handling each of the client sessions.
+	 * 
+	 * @return The client sessions handle.
+	 */
+	public Sessions getSessions() {
+		return clientSessions;
+	}
+
+	/**
+	 * Creates a server for this instance.
+	 * 
+	 * @param port The port for the instance to run on.
+	 * @throws IOException When an I/O error occurs.
+	 */
+	public void createServer(int port) throws IOException {
+		server = ServerFactory.sslServerFactory.createServer(clientSessions, port);
+	}
+
+	/**
+	 * Gets the current server being used on this instance.
+	 * 
+	 * @return The current server.
+	 */
+	public Server getCurrentServer() {
+		return server;
 	}
 }

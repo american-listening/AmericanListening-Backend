@@ -19,7 +19,7 @@ public abstract class ConnectionFactory {
 
 		@Override
 		public Connection createConnection(InetAddress address, int port) throws IOException {
-			SSLRemoteClient client = new SSLRemoteClient(address, port);
+			SSLClient client = new SSLClient(address, port);
 			return client;
 		}
 		
@@ -33,6 +33,7 @@ public abstract class ConnectionFactory {
 		}
 		
 	}
+
 
 	/**
 	 * Creates a new connection.

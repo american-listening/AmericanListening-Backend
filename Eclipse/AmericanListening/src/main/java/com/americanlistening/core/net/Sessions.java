@@ -14,20 +14,6 @@ import java.util.Set;
  */
 public class Sessions {
 
-	/**
-	 * Default seed.
-	 */
-	public static final long DEFAULT_SEED = 0L;
-
-	static {
-		defaultSessions = new Sessions(DEFAULT_SEED);
-	}
-
-	/**
-	 * The default sessions object.
-	 */
-	public static final Sessions defaultSessions;
-
 	private Map<Long, ClientSession> sessions;
 	private Random r;
 

@@ -69,6 +69,7 @@ public class UserIO {
 			lines.add(in.nextLine());
 		}
 		in.close();
+		return null;
 	}
 	
 	private UserIO() { }

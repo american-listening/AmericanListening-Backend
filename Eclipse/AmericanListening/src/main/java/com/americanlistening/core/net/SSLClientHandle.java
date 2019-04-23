@@ -44,7 +44,9 @@ public class SSLClientHandle implements Runnable, Connection {
 		eCalls = new ArrayList<>();
 		Thread t = new Thread(this);
 		t.setName("SSL-Client-Handle-Thread");
+		t.setDaemon(true);
 		t.start();
+		System.out.println("connect: " + socket.getRemoteSocketAddress());
 	}
 
 	@Override

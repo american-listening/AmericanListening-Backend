@@ -78,6 +78,14 @@ class SSLServer implements Server {
 
 	@Override
 	public void stop() throws IOException {
+		for (Connection con : handles) {
+			try {
+				con.stop();
+			} catch (IOException e) {
+				System.err.println("Failed to stop: " + con);
+			}
+		}
+		handles.clear();
 		shouldRun = false;
 		server.close();
 	}

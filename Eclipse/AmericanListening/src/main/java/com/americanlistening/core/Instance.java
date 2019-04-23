@@ -3,6 +3,7 @@ package com.americanlistening.core;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -44,16 +45,19 @@ public class Instance {
 	 * 
 	 * @param instanceName The name of the instance.
 	 * @param path         The working directory of the instance.
+	 * @param args		   The instance creation arguments.
 	 * @return The new instance.
 	 */
-	public static Instance createInstance(String instanceName, String path) {
-		return new Instance(instanceName, path);
+	public static Instance createInstance(String instanceName, String path, String[] args) {
+		return new Instance(instanceName, path, args);
 	}
 
 	/**
 	 * The logger for this instance.
 	 */
 	public final Logger logger;
+	
+	private String[] args;
 
 	private String name;
 	private String path;
@@ -70,7 +74,10 @@ public class Instance {
 	// TODO: Implement playlists
 	// private Map<Long, Playlist> playlists;
 
-	private Instance(String name, String path) {
+	private Instance(String name, String path, String[] args) {
+		this.args = args;
+		if (this.args == null)
+			this.args = new String[] { };
 		this.name = name;
 		this.path = path == null ? "" : path;
 		this.users = new HashMap<>();
@@ -79,6 +86,10 @@ public class Instance {
 		this.userGenerator = new Random();
 		this.clientSessions = new Sessions(new Random().nextLong());
 		Thread.setDefaultUncaughtExceptionHandler(new UnhandledExceptionHandler(this));
+	}
+	
+	private void processArgs(String[] args) {
+		
 	}
 
 	/**
@@ -271,5 +282,14 @@ public class Instance {
 	 */
 	public Server getCurrentServer() {
 		return server;
+	}
+	
+	/**
+	 * Returns the arguments used for the creation of this instance.
+	 * 
+	 * @return The arguments.
+	 */
+	public String[] getArguments() {
+		return Arrays.copyOf(args, args.length);
 	}
 }

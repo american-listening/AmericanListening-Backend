@@ -40,24 +40,38 @@ public class Instance {
 	 */
 	public static final String PLAYLIST_SUBDIRECTORY = "playlists";
 
+	private static final InstanceConfiguration defaultConfiguration;
+
+	static {
+		defaultConfiguration = new InstanceConfiguration();
+		defaultConfiguration.args = null;
+		defaultConfiguration.debug = false;
+		defaultConfiguration.instanceName = "default-instance";
+		defaultConfiguration.path = null;
+		defaultConfiguration.sessionsSeed = 0L;
+		defaultConfiguration.userGenerator = new Random();
+		defaultConfiguration.logLevel = Level.WARNING;
+	}
+
 	/**
 	 * Creates a new instance.
 	 * 
-	 * @param instanceName The name of the instance.
-	 * @param path         The working directory of the instance.
-	 * @param args		   The instance creation arguments.
+	 * @param config
+	 *            The instance configuration. This can be <code>null</code>.
 	 * @return The new instance.
 	 */
-	public static Instance createInstance(String instanceName, String path, String[] args) {
-		return new Instance(instanceName, path, args);
+	public static Instance createInstance(InstanceConfiguration config) {
+		return new Instance(config);
 	}
 
 	/**
 	 * The logger for this instance.
 	 */
 	public final Logger logger;
-	
+
 	private String[] args;
+
+	private InstanceConfiguration config;
 
 	private String name;
 	private String path;
@@ -74,22 +88,29 @@ public class Instance {
 	// TODO: Implement playlists
 	// private Map<Long, Playlist> playlists;
 
-	private Instance(String name, String path, String[] args) {
-		this.args = args;
-		if (this.args == null)
-			this.args = new String[] { };
-		this.name = name;
-		this.path = path == null ? "" : path;
+	private Instance(InstanceConfiguration config) {
+		if (config == null) {
+			config = defaultConfiguration;
+		}
+		if (config.args == null)
+			this.args = new String[] {};
+		else
+			this.args = Arrays.copyOf(config.args, config.args.length);
+		this.name = config.instanceName;
+		this.path = config.path == null ? "" : config.instanceName;
 		this.users = new HashMap<>();
 		this.playlists = new HashMap<>();
 		this.logger = Logger.getLogger(name);
-		this.userGenerator = new Random();
-		this.clientSessions = new Sessions(new Random().nextLong());
+		this.userGenerator = config.userGenerator == null ? new Random() : config.userGenerator;
+		this.clientSessions = new Sessions(config.sessionsSeed);
 		Thread.setDefaultUncaughtExceptionHandler(new UnhandledExceptionHandler(this));
+		if (config.logLevel != null)
+			this.logger.setLevel(config.logLevel);
+		this.config = config.clone();
 	}
-	
+
 	private void processArgs(String[] args) {
-		
+
 	}
 
 	/**
@@ -104,8 +125,10 @@ public class Instance {
 	/**
 	 * Loads all data from path <code>path</code>.
 	 * 
-	 * @param path The path to load from.
-	 * @throws IOException When an I/O error occurs.
+	 * @param path
+	 *            The path to load from.
+	 * @throws IOException
+	 *             When an I/O error occurs.
 	 */
 	public void load(String path) throws IOException {
 		path = path == null ? "" : path;
@@ -138,7 +161,8 @@ public class Instance {
 	/**
 	 * Creates a new user with email <code>email</code>.
 	 * 
-	 * @param email The email.
+	 * @param email
+	 *            The email.
 	 * @return The new user.
 	 */
 	public User createUser(String email) {
@@ -152,19 +176,24 @@ public class Instance {
 	/**
 	 * Saves user <code>user</code> to a file.
 	 * 
-	 * @param user The user to save.
-	 * @throws IOException When an I/O error occurs.
+	 * @param user
+	 *            The user to save.
+	 * @throws IOException
+	 *             When an I/O error occurs.
 	 */
 	public void saveUser(User user) throws IOException {
-		File outp = new File(path + DATA_SUBDIRECTORY + File.separator + USER_SUBDIRECTORY + File.separator + user.id + ".udata");		
+		File outp = new File(
+				path + DATA_SUBDIRECTORY + File.separator + USER_SUBDIRECTORY + File.separator + user.id + ".udata");
 		UserIO.writeUser(user, outp);
 	}
 
 	/**
 	 * Saves playlist <code>playlist</code> to a file.
 	 * 
-	 * @param playlist The playlist to save.
-	 * @throws IOException When an I/O error occurs.
+	 * @param playlist
+	 *            The playlist to save.
+	 * @throws IOException
+	 *             When an I/O error occurs.
 	 */
 	public void savePlaylist(Playlist playlist) throws IOException {
 		File outp = new File(path + DATA_SUBDIRECTORY + PLAYLIST_SUBDIRECTORY + playlist.id + ".pdata");
@@ -209,7 +238,8 @@ public class Instance {
 	/**
 	 * Returns a user of id <code>id</code>.
 	 * 
-	 * @param id The user id.
+	 * @param id
+	 *            The user id.
 	 * @return The respective user, or <code>null</code> if it doesn't exist.
 	 */
 	public User getUser(long id) {
@@ -220,7 +250,8 @@ public class Instance {
 	 * Returns users with username <code>username</code>, ignoring capitalization.
 	 * If capitalization must be compared, use <code>usersWithExplicitName</code>.
 	 * 
-	 * @param username The username to test for.
+	 * @param username
+	 *            The username to test for.
 	 * @return The users with username <code>username</code>.
 	 */
 	public User[] usersWithName(String username) {
@@ -239,7 +270,8 @@ public class Instance {
 	 * Returns users with username <code>username</code>, comparing capitalization.
 	 * If capitalization shouldn't be compared, use <code>usersWithName</code>.
 	 * 
-	 * @param username The username to test for.
+	 * @param username
+	 *            The username to test for.
 	 * @return The users with username <code>username</code>.
 	 */
 	public User[] usersWithExplicitName(String username) {
@@ -266,8 +298,10 @@ public class Instance {
 	/**
 	 * Creates a server for this instance.
 	 * 
-	 * @param port The port for the instance to run on.
-	 * @throws IOException When an I/O error occurs.
+	 * @param port
+	 *            The port for the instance to run on.
+	 * @throws IOException
+	 *             When an I/O error occurs.
 	 */
 	public void createServer(int port) throws IOException {
 		server = ServerFactory.sslServerFactory.createServer(clientSessions, port);
@@ -281,7 +315,7 @@ public class Instance {
 	public Server getCurrentServer() {
 		return server;
 	}
-	
+
 	/**
 	 * Returns the arguments used for the creation of this instance.
 	 * 

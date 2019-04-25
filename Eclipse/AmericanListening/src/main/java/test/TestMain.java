@@ -3,9 +3,11 @@ package test;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.InetAddress;
+import java.util.Random;
 import java.util.logging.Level;
 
 import com.americanlistening.core.Instance;
+import com.americanlistening.core.InstanceConfiguration;
 import com.americanlistening.core.User;
 import com.americanlistening.core.net.Connection;
 import com.americanlistening.core.net.ConnectionFactory;
@@ -14,8 +16,17 @@ import com.americanlistening.core.net.Server;
 public class TestMain {
 
 	public static void main(String[] args) {
-		Instance inst = Instance.createInstance("test_instance", null, args);
-		inst.logger.setLevel(Level.ALL);
+		InstanceConfiguration config = new InstanceConfiguration();
+		config.args = args;
+		config.debug = false;
+		config.instanceName = "test_instance";
+		config.sessionsSeed = 1L;
+		config.userGenerator = new Random();
+		config.path = null;
+		config.logLevel = Level.ALL;
+		
+		Instance inst = Instance.createInstance(config);
+
 		try {
 			inst.load(null);
 			inst.logger.log(Level.INFO, "loaded!");

@@ -118,9 +118,12 @@ public class CrashReport {
 		build.append("java.vm.specification.name: " + System.getProperty("java.vm.specification.name") + "\n");
 		build.append("java.vm.info: " + System.getProperty("java.vm.info") + "\n");
 		build.append("VM args: ");
-		for (int i = 0; i < args.size(); i++) {
-			build.append(args.get(i) + " ");
-		}
+		if (args.size() > 0) {
+			for (String arg : args) {
+				build.append(arg + " ");
+			}
+		} else 
+			build.append("[none] ");
 		build.append("\n\n");
 
 		build.append("Threads:\n");

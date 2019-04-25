@@ -44,7 +44,8 @@ public class UserIO {
 		out.println("location=" + user.getLocation());
 		out.println("age=" + user.getAge());
 		out.println("email=" + user.getEmail());
-		out.println("history=" + user.getEventHistory().values().toString());
+		out.println("history="
+				+ Arrays.toString(user.getEventHistory().values().toArray(new Event[user.getEventHistory().size()])));
 		out.flush();
 		out.close();
 	}
@@ -69,8 +70,10 @@ public class UserIO {
 			lines.add(in.nextLine());
 		}
 		in.close();
+
 		return null;
 	}
-	
-	private UserIO() { }
+
+	private UserIO() {
+	}
 }

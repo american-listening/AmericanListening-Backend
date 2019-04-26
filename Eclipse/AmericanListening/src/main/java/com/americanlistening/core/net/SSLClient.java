@@ -46,6 +46,8 @@ class SSLClient implements Connection {
 		// Create socket and connect
 		SSLSocketFactory factory = (SSLSocketFactory) SSLSocketFactory.getDefault();
 		socket = (SSLSocket) factory.createSocket(addr, port);
+		
+		socket.startHandshake();
 
 		out = socket.getOutputStream();
 		in = socket.getInputStream();

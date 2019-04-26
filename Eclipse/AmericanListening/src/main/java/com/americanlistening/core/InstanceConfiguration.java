@@ -20,6 +20,7 @@ public class InstanceConfiguration implements Cloneable {
 	public long sessionsSeed;
 	
 	public Level logLevel;
+	public String logFile;
 	
 	public String[] args;
 
@@ -32,6 +33,7 @@ public class InstanceConfiguration implements Cloneable {
 		config.userGenerator = userGenerator;
 		config.sessionsSeed = sessionsSeed;
 		config.logLevel = logLevel;
+		config.logFile = logFile;
 		config.args = Arrays.copyOf(args, args.length);
 		return config;
 	}

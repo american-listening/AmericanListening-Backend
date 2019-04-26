@@ -10,9 +10,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.americanlistening.core.net.InputCallback;
 import com.americanlistening.core.net.Server;
 import com.americanlistening.core.net.ServerFactory;
 import com.americanlistening.core.net.Sessions;
@@ -68,6 +70,11 @@ public class Instance {
 	 * The logger for this instance.
 	 */
 	public final Logger logger;
+	
+	/**
+	 * The command input callback for this instance.
+	 */
+	public final InputCallback commandCallback;
 
 	private String[] args;
 
@@ -89,6 +96,7 @@ public class Instance {
 	// private Map<Long, Playlist> playlists;
 
 	private Instance(InstanceConfiguration config) {
+		Thread.setDefaultUncaughtExceptionHandler(new UnhandledExceptionHandler(this));
 		if (config == null) {
 			config = defaultConfiguration;
 		}
@@ -101,12 +109,17 @@ public class Instance {
 		this.users = new HashMap<>();
 		this.playlists = new HashMap<>();
 		this.logger = Logger.getLogger(name);
+		logger.setUseParentHandlers(false);
+		for (Handler handle : logger.getHandlers()) {
+			logger.removeHandler(handle);
+		}
+		logger.addHandler(new InstanceLogHandler(config.logFile, logger));
 		this.userGenerator = config.userGenerator == null ? new Random() : config.userGenerator;
 		this.clientSessions = new Sessions(config.sessionsSeed);
-		Thread.setDefaultUncaughtExceptionHandler(new UnhandledExceptionHandler(this));
 		if (config.logLevel != null)
 			this.logger.setLevel(config.logLevel);
 		this.config = config.clone();
+		this.commandCallback = new CommandInput(this);
 	}
 
 	private void processArgs(String[] args) {

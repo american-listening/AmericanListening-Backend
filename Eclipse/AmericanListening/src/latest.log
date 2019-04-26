@@ -1,0 +1,44 @@
+[04/25/2019 22:04:51] [INFO] com.americanlistening.main.Main.main: Created instance.
+[04/25/2019 22:04:51] [INFO] com.americanlistening.main.Main.main: Created server on port 1000
+[04/25/2019 22:04:51] [INFO] com.americanlistening.main.Main.main: Dispatching server thread...
+[04/25/2019 22:04:51] [FINE] com.americanlistening.main.Main.lambda$1: Connect: /127.0.0.1:51738
+[04/25/2019 22:04:51] [SEVERE] com.americanlistening.main.Main.main: Failed to connect to.javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+	at sun.security.ssl.Alerts.getSSLException(Unknown Source)
+	at sun.security.ssl.SSLSocketImpl.fatal(Unknown Source)
+	at sun.security.ssl.Handshaker.fatalSE(Unknown Source)
+	at sun.security.ssl.Handshaker.fatalSE(Unknown Source)
+	at sun.security.ssl.ClientHandshaker.serverCertificate(Unknown Source)
+	at sun.security.ssl.ClientHandshaker.processMessage(Unknown Source)
+	at sun.security.ssl.Handshaker.processLoop(Unknown Source)
+	at sun.security.ssl.Handshaker.process_record(Unknown Source)
+	at sun.security.ssl.SSLSocketImpl.readRecord(Unknown Source)
+	at sun.security.ssl.SSLSocketImpl.performInitialHandshake(Unknown Source)
+	at sun.security.ssl.SSLSocketImpl.startHandshake(Unknown Source)
+	at sun.security.ssl.SSLSocketImpl.startHandshake(Unknown Source)
+	at com.americanlistening.core.net.SSLClient.<init>(SSLClient.java:50)
+	at com.americanlistening.core.net.ConnectionFactory$SSLConnectionFactory.createConnection(ConnectionFactory.java:22)
+	at com.americanlistening.core.net.ConnectionFactory.createConnection(ConnectionFactory.java:48)
+	at com.americanlistening.main.Main.main(Main.java:58)
+Caused by: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+	at sun.security.validator.PKIXValidator.doBuild(Unknown Source)
+	at sun.security.validator.PKIXValidator.engineValidate(Unknown Source)
+	at sun.security.validator.Validator.validate(Unknown Source)
+	at sun.security.ssl.X509TrustManagerImpl.validate(Unknown Source)
+	at sun.security.ssl.X509TrustManagerImpl.checkTrusted(Unknown Source)
+	at sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(Unknown Source)
+	... 12 more
+Caused by: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+	at sun.security.provider.certpath.SunCertPathBuilder.build(Unknown Source)
+	at sun.security.provider.certpath.SunCertPathBuilder.engineBuild(Unknown Source)
+	at java.security.cert.CertPathBuilder.build(Unknown Source)
+	... 18 more
+
+[04/25/2019 22:04:51] [SEVERE] com.americanlistening.core.UnhandledExceptionHandler.uncaughtException: Unhandled exception in Thread "main"java.lang.NullPointerException
+	at com.americanlistening.main.Main.main(Main.java:64)
+
+[04/25/2019 22:04:51] [SEVERE] com.americanlistening.core.UnhandledExceptionHandler.uncaughtException: Attempting to force save everything...
+[04/25/2019 22:04:51] [INFO] com.americanlistening.core.Instance.saveAll: Saved 0 users.
+[04/25/2019 22:04:51] [INFO] com.americanlistening.core.Instance.saveAll: Saved 0 playlists.
+[04/25/2019 22:04:51] [INFO] com.americanlistening.core.UnhandledExceptionHandler.uncaughtException: Succeeded in saving everything.
+[04/25/2019 22:04:51] [INFO] com.americanlistening.core.UnhandledExceptionHandler.uncaughtException: Writing to crash file.
+[04/25/2019 22:04:51] [INFO] com.americanlistening.core.UnhandledExceptionHandler.uncaughtException: Wrote to crash file: D:\Ethan\Documents\MusicProject\Main\Eclipse\AmericanListening\src\crash_22-04-51.crash

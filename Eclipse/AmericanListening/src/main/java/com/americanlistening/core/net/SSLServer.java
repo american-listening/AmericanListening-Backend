@@ -1,11 +1,14 @@
 package com.americanlistening.core.net;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.security.KeyStore;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.net.ssl.SSLServerSocket;
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLServerSocketFactory;
 import javax.net.ssl.SSLSocket;
 
@@ -18,6 +21,7 @@ import javax.net.ssl.SSLSocket;
 class SSLServer implements Server {
 
 	private SSLServer ref;
+	private int port;
 	
 	private Sessions sessions;
 	
@@ -28,18 +32,24 @@ class SSLServer implements Server {
 	private List<SSLClientHandle> handles;
 	
 	private List<ErrorCallback> eCalls;
+	private List<ConnectionCallback> cCalls;
 	
 	SSLServer(Sessions sessions, int port) throws IOException {
 		this.sessions = sessions;
-		
-		SSLServerSocketFactory factory = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
-		server = factory.createServerSocket(port);
+		this.port = port;
 		
 		handles = new ArrayList<>();
 		
 		eCalls = new ArrayList<>();
+		cCalls = new ArrayList<>();
 		
 		ref = this;
+	}
+	
+	@Override
+	public void init() throws IOException {
+		SSLServerSocketFactory factory = getServerSocketFactory("TLS");
+		server = factory.createServerSocket(port);
 	}
 	
 	/**
@@ -57,6 +67,9 @@ class SSLServer implements Server {
 					SSLSocket accept = (SSLSocket) server.accept();
 					SSLClientHandle handle = new SSLClientHandle(ref, sessions, accept);
 					handles.add(handle);
+					for (ConnectionCallback c : cCalls) {
+						c.onConnect(handle);
+					}
 				} catch (Throwable t) {
 					for (ErrorCallback c : eCalls) {
 						c.onError(t, Thread.currentThread(), this);
@@ -65,6 +78,36 @@ class SSLServer implements Server {
 			}
 		}
 		
+	}
+	
+	private SSLServerSocketFactory getServerSocketFactory(String type) {
+		if (type.equals("TLS")) {
+			SSLServerSocketFactory ssf = null;
+			try {
+				SSLContext ctx;
+				KeyManagerFactory kmf;
+				KeyStore ks;
+				char[] passphrase = "password".toCharArray();
+				
+				ctx = SSLContext.getInstance("TLS");
+				kmf = KeyManagerFactory.getInstance("SunX509");
+				ks = KeyStore.getInstance("JKS");
+				
+				ks.load(new FileInputStream("keystore.txt"), passphrase);
+				kmf.init(ks, passphrase);
+				ctx.init(kmf.getKeyManagers(), null, null);
+				
+				ssf = ctx.getServerSocketFactory();
+				return ssf;
+			} catch (Exception e) {
+				for (ErrorCallback c : eCalls) {
+					c.onError(e, Thread.currentThread(), this);
+				}
+				return null;
+			}
+		} else {
+			return (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
+		}
 	}
 
 	@Override
@@ -96,7 +139,13 @@ class SSLServer implements Server {
 	}
 	
 	@Override
+	public void addConnectionCallback(ConnectionCallback callback) {
+		cCalls.add(callback);
+	}
+	
+	@Override
 	public String toString() {
 		return "SSLServer[port=" + server.getLocalPort() + "]";
 	}
+
 }

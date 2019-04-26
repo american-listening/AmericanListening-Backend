@@ -1,0 +1,89 @@
+The application has crashed!
+Details are below:
+
+- - - - - - - S Y S T E M - - - - - - -
+
+Operating System:
+Windows 10 (amd64) version 10.0
+
+Memory:
+483077904 bytes (460 MB) / 512753664 bytes (489 MB) up to 7591165952 bytes (7239 MB)
+
+Monitor:
+Number of Devices: 2
+Devices: 
+Device 1:
+	Resoultion: 1920x1080
+	Depth: 32 bit
+	Refresh Rate: 60Hz
+	Is Accelerated? true
+	Avaliable Accelerated Memory: -1.0MB
+	Translucency Capable? true
+Device 2:
+	Resoultion: 1680x1050
+	Depth: 32 bit
+	Refresh Rate: 60Hz
+	Is Accelerated? false
+	Translucency Capable? true
+
+JRE Information:
+java.home: C:\Program Files\Java\jre1.8.0_201
+java.library.path: C:\Program Files\Java\jre1.8.0_201\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:/Program Files/Java/jre1.8.0_201/bin/server;C:/Program Files/Java/jre1.8.0_201/bin;C:/Program Files/Java/jre1.8.0_201/lib/amd64;C:\VulkanSDK\1.1.101.0\Bin;C:\VulkanSDK\1.1.97.0\Bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\iCLS\;C:\Program Files\Intel\Intel(R) Management Engine Components\iCLS\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\PuTTY\;C:\Program Files\dotnet\;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\TortoiseGit\bin;C:\Users\evrhe\AppData\Local\Microsoft\WindowsApps;C:\Users\evrhe\AppData\Local\GitHubDesktop\bin;C:\Gradle\gradle-5.3.1\bin;;C:\Windows\system32;;.
+java.ext.dirs: C:\Program Files\Java\jre1.8.0_201\lib\ext;C:\Windows\Sun\Java\lib\ext
+java.version: 1.8.0_201
+java.runtime.version: 1.8.0_201-b09
+java.class.version: 52.0
+java.vendor: Oracle Corporation
+java.vendor.url: http://java.oracle.com/
+
+User Information:
+user.name: evrhe
+user.timezone: America/Los_Angeles
+user.home: C:\Users\evrhe
+user.dir: D:\Ethan\Documents\MusicProject\Main\Eclipse\AmericanListening\src
+
+Version Information:
+Instance Version: 1.0.0
+
+- - - - - - - P R O C E S S - - - - - - -
+
+Information:
+Time: 04/25/2019 22:04:51
+
+JVM Information:
+java.vm.vendor: Oracle Corporation
+java.vm.specification.version: 1.8
+java.vm.specification.name: Java Virtual Machine Specification
+java.vm.info: mixed mode
+VM args: -Dfile.encoding=Cp1252 
+
+Threads:
+AWT-Windows (daemon=true, priority=6, id=16)
+Finalizer (daemon=true, priority=8, id=3)
+Attach Listener (daemon=true, priority=5, id=5)
+Signal Dispatcher (daemon=true, priority=9, id=4)
+SSLServer-Thread (daemon=false, priority=5, id=12)
+Java2D Disposer (daemon=true, priority=10, id=14)
+Reference Handler (daemon=true, priority=10, id=2)
+SSL-Client-Handle-Thread (daemon=true, priority=5, id=13)
+AWT-Shutdown (daemon=false, priority=5, id=15)
+main (daemon=false, priority=5, id=1)
+
+Exception:
+Thrown In: main (daemon=false, priority=5, id=1)
+
+Type: java.lang.NullPointerException
+Message: null
+Cause: null
+Suppressed: 0
+
+Stacktrace:
+java.lang.NullPointerException
+	at com.americanlistening.main.Main.main(Main.java:64)
+
+- - - - - - - I N S T A N C E - - - - - - -
+
+Instance Version: 1.0.0
+Instane name: Instance
+
+- - - - - - - E N D - - - - - - -

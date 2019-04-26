@@ -36,18 +36,20 @@ class UnhandledExceptionHandler implements UncaughtExceptionHandler {
 		else
 			currInstance.logger.log(SEVERE, "Failed to save everything.");
 		currInstance.logger.log(INFO, "Writing to crash file.");
+		if (currInstance.shouldWriteCrashFile()) {
 		CrashReport report = new CrashReport(e, t, currInstance);
-		try {
-			DateFormat dateFormat = new SimpleDateFormat("HH-mm-ss");
-			Date date = new Date();
-			File f = new File("crash_" + dateFormat.format(date) + ".crash");
-			if (f.exists())
-				FileUtil.delete(f);
-			f.createNewFile();
-			report.writeReport(new FileOutputStream(f));
-			currInstance.logger.log(INFO, "Wrote to crash file: " + f.getAbsolutePath());
-		} catch (Throwable io) {
-			currInstance.logger.log(SEVERE, "Failed to write crash file.", io);
+			try {
+				DateFormat dateFormat = new SimpleDateFormat("HH-mm-ss");
+				Date date = new Date();
+				File f = new File("crash_" + dateFormat.format(date) + ".crash");
+				if (f.exists())
+					FileUtil.delete(f);
+				f.createNewFile();
+				report.writeReport(new FileOutputStream(f));
+				currInstance.logger.log(INFO, "Wrote to crash file: " + f.getAbsolutePath());
+			} catch (Throwable io) {
+				currInstance.logger.log(SEVERE, "Failed to write crash file.", io);
+			}
 		}
 		System.exit(-1);
 	}

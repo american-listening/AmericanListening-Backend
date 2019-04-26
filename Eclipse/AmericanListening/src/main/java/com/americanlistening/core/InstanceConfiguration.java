@@ -14,6 +14,7 @@ import java.util.logging.Level;
 public class InstanceConfiguration implements Cloneable {
 	
 	public boolean debug;
+	public boolean dontWriteCrashFile;
 	
 	public String instanceName, path;
 	public Random userGenerator;
@@ -30,6 +31,7 @@ public class InstanceConfiguration implements Cloneable {
 		config.instanceName = instanceName;
 		config.path = path;
 		config.debug = debug;
+		config.dontWriteCrashFile = dontWriteCrashFile;
 		config.userGenerator = userGenerator;
 		config.sessionsSeed = sessionsSeed;
 		config.logLevel = logLevel;

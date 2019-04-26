@@ -11,6 +11,7 @@ import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLServerSocketFactory;
 import javax.net.ssl.SSLSocket;
+import javax.net.ssl.TrustManagerFactory;
 
 /**
  * Type of server that supports SSL connections.
@@ -91,9 +92,9 @@ class SSLServer implements Server {
 				
 				ctx = SSLContext.getInstance("TLS");
 				kmf = KeyManagerFactory.getInstance("SunX509");
-				ks = KeyStore.getInstance("JKS");
-				
-				ks.load(new FileInputStream("keystore.txt"), passphrase);
+				ks = KeyStore.getInstance("PKCS12");
+		
+				ks.load(new FileInputStream("keystore.pfx"), passphrase);
 				kmf.init(ks, passphrase);
 				ctx.init(kmf.getKeyManagers(), null, null);
 				

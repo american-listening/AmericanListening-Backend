@@ -5,10 +5,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.math.BigInteger;
 import java.net.InetAddress;
+import java.security.cert.Certificate;
+import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocket;
 
 /**
@@ -18,27 +22,42 @@ import javax.net.ssl.SSLSocket;
  * @since 1.0
  */
 public class SSLClientHandle implements Runnable, Connection {
-	
+
 	private SSLServer server;
 
 	private SSLSocket socket;
 	private InputStream in;
 	private OutputStream out;
-	
+
 	private List<InputCallback> iCalls;
 	private List<ErrorCallback> eCalls;
-	
+
 	private boolean shouldRun;
-	
+
 	private ClientSessionImpl session;
-	
+
 	SSLClientHandle(SSLServer server, Sessions sessions, SSLSocket socket) throws IOException {
+		SSLSession session = socket.getSession();
+		Certificate[] cchain2 = session.getLocalCertificates();
+		if (cchain2 == null) {
+			System.err.println("Certificates are null!  n");
+		}
+		for (Certificate c : cchain2) {
+			System.out.println(((X509Certificate) c).getSubjectDN());
+		}
+		System.err.println("Peer host is " + session.getPeerHost());
+		System.err.println("Cipher is " + session.getCipherSuite());
+		System.err.println("Protocol is " + session.getProtocol());
+		System.err.println("ID is " + new BigInteger(session.getId()));
+		System.err.println("Session created in " + session.getCreationTime());
+		System.err.println("Session accessed in " + session.getLastAccessedTime());
+
 		this.server = server;
 		this.socket = socket;
 		this.in = socket.getInputStream();
 		this.out = socket.getOutputStream();
 		this.session = new ClientSessionImpl(sessions, this);
-		sessions.addSession(session);
+		sessions.addSession(this.session);
 		shouldRun = true;
 		iCalls = new ArrayList<>();
 		eCalls = new ArrayList<>();
@@ -64,7 +83,7 @@ public class SSLClientHandle implements Runnable, Connection {
 			}
 		}
 	}
-	
+
 	boolean isValid() {
 		return !socket.isClosed();
 	}

@@ -1,43 +1,12 @@
-[04/26/2019 10:29:38] [INFO] com.americanlistening.main.Main.main: Created instance.
-[04/26/2019 10:29:38] [INFO] com.americanlistening.main.Main.main: Created server on port 1000
-[04/26/2019 10:29:39] [INFO] com.americanlistening.main.Main.main: Dispatching server thread...
-[04/26/2019 10:29:39] [FINE] com.americanlistening.main.Main.lambda$1: Connect: /127.0.0.1:59603
-[04/26/2019 10:29:39] [SEVERE] com.americanlistening.main.Main.main: Failed to connect to.javax.net.ssl.SSLException: java.lang.RuntimeException: Unexpected error: java.security.InvalidAlgorithmParameterException: the trustAnchors parameter must be non-empty
-	at sun.security.ssl.Alerts.getSSLException(Unknown Source)
-	at sun.security.ssl.SSLSocketImpl.fatal(Unknown Source)
-	at sun.security.ssl.SSLSocketImpl.fatal(Unknown Source)
-	at sun.security.ssl.SSLSocketImpl.handleException(Unknown Source)
-	at sun.security.ssl.SSLSocketImpl.startHandshake(Unknown Source)
-	at sun.security.ssl.SSLSocketImpl.startHandshake(Unknown Source)
-	at com.americanlistening.core.net.SSLClient.<init>(SSLClient.java:50)
-	at com.americanlistening.core.net.ConnectionFactory$SSLConnectionFactory.createConnection(ConnectionFactory.java:22)
-	at com.americanlistening.core.net.ConnectionFactory.createConnection(ConnectionFactory.java:48)
-	at com.americanlistening.main.Main.main(Main.java:59)
-Caused by: java.lang.RuntimeException: Unexpected error: java.security.InvalidAlgorithmParameterException: the trustAnchors parameter must be non-empty
-	at sun.security.validator.PKIXValidator.<init>(Unknown Source)
-	at sun.security.validator.Validator.getInstance(Unknown Source)
-	at sun.security.ssl.X509TrustManagerImpl.getValidator(Unknown Source)
-	at sun.security.ssl.X509TrustManagerImpl.checkTrustedInit(Unknown Source)
-	at sun.security.ssl.X509TrustManagerImpl.checkTrusted(Unknown Source)
-	at sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(Unknown Source)
-	at sun.security.ssl.ClientHandshaker.serverCertificate(Unknown Source)
-	at sun.security.ssl.ClientHandshaker.processMessage(Unknown Source)
-	at sun.security.ssl.Handshaker.processLoop(Unknown Source)
-	at sun.security.ssl.Handshaker.process_record(Unknown Source)
-	at sun.security.ssl.SSLSocketImpl.readRecord(Unknown Source)
-	at sun.security.ssl.SSLSocketImpl.performInitialHandshake(Unknown Source)
-	... 6 more
-Caused by: java.security.InvalidAlgorithmParameterException: the trustAnchors parameter must be non-empty
-	at java.security.cert.PKIXParameters.setTrustAnchors(Unknown Source)
-	at java.security.cert.PKIXParameters.<init>(Unknown Source)
-	at java.security.cert.PKIXBuilderParameters.<init>(Unknown Source)
-	... 18 more
+[04/30/2019 13:09:43] [INFO] com.americanlistening.main.Main.main: Created instance.
+[04/30/2019 13:09:43] [SEVERE] com.americanlistening.core.UnhandledExceptionHandler.uncaughtException: Unhandled exception in Thread "main"java.lang.UnsupportedOperationException: SSLServer is no longer supported.
+	at com.americanlistening.core.net.SSLServer.<init>(SSLServer.java:53)
+	at com.americanlistening.core.net.ServerFactory$SSLServerFactory.createServer(ServerFactory.java:32)
+	at com.americanlistening.core.Instance.createServer(Instance.java:310)
+	at com.americanlistening.main.Main.main(Main.java:35)
 
-[04/26/2019 10:29:39] [SEVERE] com.americanlistening.core.UnhandledExceptionHandler.uncaughtException: Unhandled exception in Thread "main"java.lang.NullPointerException
-	at com.americanlistening.main.Main.main(Main.java:65)
-
-[04/26/2019 10:29:39] [SEVERE] com.americanlistening.core.UnhandledExceptionHandler.uncaughtException: Attempting to force save everything...
-[04/26/2019 10:29:39] [INFO] com.americanlistening.core.Instance.saveAll: Saved 0 users.
-[04/26/2019 10:29:39] [INFO] com.americanlistening.core.Instance.saveAll: Saved 0 playlists.
-[04/26/2019 10:29:39] [INFO] com.americanlistening.core.UnhandledExceptionHandler.uncaughtException: Succeeded in saving everything.
-[04/26/2019 10:29:39] [INFO] com.americanlistening.core.UnhandledExceptionHandler.uncaughtException: Writing to crash file.
+[04/30/2019 13:09:43] [SEVERE] com.americanlistening.core.UnhandledExceptionHandler.uncaughtException: Attempting to force save everything...
+[04/30/2019 13:09:43] [INFO] com.americanlistening.core.Instance.saveAll: Saved 0 users.
+[04/30/2019 13:09:43] [INFO] com.americanlistening.core.Instance.saveAll: Saved 0 playlists.
+[04/30/2019 13:09:43] [INFO] com.americanlistening.core.UnhandledExceptionHandler.uncaughtException: Succeeded in saving everything.
+[04/30/2019 13:09:43] [INFO] com.americanlistening.core.UnhandledExceptionHandler.uncaughtException: Writing to crash file.

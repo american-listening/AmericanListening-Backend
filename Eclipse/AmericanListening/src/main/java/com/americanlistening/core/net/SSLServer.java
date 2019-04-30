@@ -3,10 +3,14 @@ package com.americanlistening.core.net;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
 import java.security.KeyStore;
+import java.security.Security;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.crypto.Cipher;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLServerSocketFactory;
@@ -20,7 +24,7 @@ import javax.net.ssl.TrustManagerFactory;
  * @since 1.0
  */
 class SSLServer implements Server {
-
+	
 	private SSLServer ref;
 	private int port;
 	
@@ -45,6 +49,8 @@ class SSLServer implements Server {
 		cCalls = new ArrayList<>();
 		
 		ref = this;
+		
+		throw new UnsupportedOperationException("SSLServer is no longer supported.");
 	}
 	
 	@Override
@@ -85,21 +91,30 @@ class SSLServer implements Server {
 		if (type.equals("TLS")) {
 			SSLServerSocketFactory ssf = null;
 			try {
-				SSLContext ctx;
-				KeyManagerFactory kmf;
-				KeyStore ks;
-				char[] passphrase = "password".toCharArray();
+//				SSLContext ctx;
+//				KeyManagerFactory kmf;
+//				KeyStore ks;
+//				char[] passphrase = "password".toCharArray();
+//				
+//				ctx = SSLContext.getInstance("TLS");
+//				kmf = KeyManagerFactory.getInstance("SunX509");
+//				ks = KeyStore.getInstance("PKCS12");
+//		
+//				ks.load(new FileInputStream("keystore.pfx"), passphrase);
+//				kmf.init(ks, passphrase);
+//				ctx.init(kmf.getKeyManagers(), null, null);
+//				
+//				System.err.println("Server is using provider: " + ctx.getProvider().getInfo());
+//				
+//				ssf = ctx.getServerSocketFactory();
+				//return ssf;
 				
-				ctx = SSLContext.getInstance("TLS");
-				kmf = KeyManagerFactory.getInstance("SunX509");
-				ks = KeyStore.getInstance("PKCS12");
-		
-				ks.load(new FileInputStream("keystore.pfx"), passphrase);
-				kmf.init(ks, passphrase);
-				ctx.init(kmf.getKeyManagers(), null, null);
+				KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA");
+				KeyPair kp = kpg.generateKeyPair();
+				Cipher c = Cipher.getInstance("RSA");
+				c.init(Cipher.DECRYPT_MODE, kp.getPublic());
 				
-				ssf = ctx.getServerSocketFactory();
-				return ssf;
+				return (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
 			} catch (Exception e) {
 				for (ErrorCallback c : eCalls) {
 					c.onError(e, Thread.currentThread(), this);
@@ -147,6 +162,29 @@ class SSLServer implements Server {
 	@Override
 	public String toString() {
 		return "SSLServer[port=" + server.getLocalPort() + "]";
+	}
+
+	@Override
+	public boolean isEncrypted() {
+		return false;
+	}
+
+	@Override
+	public Object getProperty(String key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setProperty(String key, Object value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean hasProperty(String key) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

@@ -10,7 +10,7 @@ import java.io.IOException;
  * @since 1.0
  */
 public interface Server {
-	
+
 	/**
 	 * Initializes the server.
 	 */
@@ -41,4 +41,37 @@ public interface Server {
 	 * @param callback The callback.
 	 */
 	public void addConnectionCallback(ConnectionCallback callback);
+
+	/**
+	 * Returns whether the server is encrypted.
+	 * 
+	 * @return <code>true</code> if the server is encrypted and <code>false</code>
+	 *         otherwise.
+	 */
+	public boolean isEncrypted();
+
+	/**
+	 * Returns the value of a property.
+	 * 
+	 * @param key The key to set.
+	 * @return The respective value.
+	 */
+	public Object getProperty(String key);
+
+	/**
+	 * Sets the property of key <code>key</code>.
+	 * 
+	 * @param key   The key to set.
+	 * @param value The value to set.
+	 */
+	public void setProperty(String key, Object value);
+
+	/**
+	 * Returns whether the server has key <code>key</code>.
+	 * 
+	 * @param key The key to test for.
+	 * @return <code>true</code> if the key is there, and <code>false</code>
+	 *         otherwise.
+	 */
+	public boolean hasProperty(String key);
 }

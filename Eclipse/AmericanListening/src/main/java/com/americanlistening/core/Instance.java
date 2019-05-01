@@ -125,7 +125,7 @@ public class Instance {
 	}
 
 	private void processArgs(String[] args) {
-
+		// TODO: Process arguments
 	}
 
 	/**
@@ -307,7 +307,7 @@ public class Instance {
 	 * @throws IOException When an I/O error occurs.
 	 */
 	public void createServer(int port) throws IOException {
-		server = ServerFactory.sslServerFactory.createServer(clientSessions, port);
+		server = config.serverFactory.createServer(clientSessions, port);
 	}
 
 	/**

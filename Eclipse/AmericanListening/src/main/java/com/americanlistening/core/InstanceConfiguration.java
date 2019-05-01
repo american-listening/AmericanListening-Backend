@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.logging.Level;
 
+import com.americanlistening.core.net.ServerFactory;
+
 /**
  * An instance configuration contains configuration information about how to
  * make an instance object.
@@ -20,6 +22,8 @@ public class InstanceConfiguration implements Cloneable {
 	public Random userGenerator;
 	public long sessionsSeed;
 	
+	public ServerFactory serverFactory;
+	
 	public Level logLevel;
 	public String logFile;
 	
@@ -34,6 +38,7 @@ public class InstanceConfiguration implements Cloneable {
 		config.dontWriteCrashFile = dontWriteCrashFile;
 		config.userGenerator = userGenerator;
 		config.sessionsSeed = sessionsSeed;
+		config.serverFactory = serverFactory;
 		config.logLevel = logLevel;
 		config.logFile = logFile;
 		config.args = Arrays.copyOf(args, args.length);

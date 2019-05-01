@@ -25,6 +25,11 @@ public abstract class ServerFactory {
 	 */
 	public static final ServerFactory secureServerFactory = new SecureServerFactory();
 
+	/**
+	 * Factory for the creation of HTTPS secure servers.
+	 */
+	public static final ServerFactory httpsSecureServerFactory = new HttpsSecureServerFactory();
+
 	private static class SSLServerFactory extends ServerFactory {
 
 		@Override
@@ -46,6 +51,15 @@ public abstract class ServerFactory {
 
 	}
 
+	private static class HttpsSecureServerFactory extends ServerFactory {
+
+		@Override
+		public Server createServer(Sessions sessions, int port) throws IOException {
+			return new HttpsSecureServer();
+		}
+
+	}
+
 	private Map<String, Object> props;
 
 	/**
@@ -58,8 +72,10 @@ public abstract class ServerFactory {
 	/**
 	 * Sets a property for the factory to use.
 	 * 
-	 * @param key   The key to use.
-	 * @param value The value to use.
+	 * @param key
+	 *            The key to use.
+	 * @param value
+	 *            The value to use.
 	 */
 	public void setProperty(String key, Object value) {
 		props.put(key, value);
@@ -68,7 +84,8 @@ public abstract class ServerFactory {
 	/**
 	 * Returns the property associated with key <code>key</code>.
 	 * 
-	 * @param key The key to use.
+	 * @param key
+	 *            The key to use.
 	 * @return The associated value.
 	 */
 	public Object getProperty(String key) {
@@ -78,7 +95,8 @@ public abstract class ServerFactory {
 	/**
 	 * Returns whether this factory has a property.
 	 * 
-	 * @param key The key to test for.
+	 * @param key
+	 *            The key to test for.
 	 * @return <code>true</code> if it has it and <code>false</code> otherwise.
 	 */
 	public boolean hasProperty(String key) {
@@ -95,10 +113,13 @@ public abstract class ServerFactory {
 	/**
 	 * Creates a server on port <code>port</code>.
 	 * 
-	 * @param sessions The client sessions handle to use on the server.
-	 * @param port     The port to create the server on.
+	 * @param sessions
+	 *            The client sessions handle to use on the server.
+	 * @param port
+	 *            The port to create the server on.
 	 * @return The new server.
-	 * @throws IOException When an I/O error occurs.
+	 * @throws IOException
+	 *             When an I/O error occurs.
 	 */
 	public abstract Server createServer(Sessions sessions, int port) throws IOException;
 }

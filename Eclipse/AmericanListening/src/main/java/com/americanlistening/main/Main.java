@@ -10,6 +10,7 @@ import com.americanlistening.core.InstanceConfiguration;
 import com.americanlistening.core.net.Connection;
 import com.americanlistening.core.net.ConnectionFactory;
 import com.americanlistening.core.net.Server;
+import com.americanlistening.core.net.ServerFactory;
 
 public class Main {
 
@@ -24,6 +25,7 @@ public class Main {
 		config.logLevel = Level.FINEST;
 		config.path = null;
 		config.sessionsSeed = 0L;
+		config.serverFactory = ServerFactory.httpsSecureServerFactory;
 		config.userGenerator = new Random();
 		config.logFile = "latest.log";
 		
@@ -54,16 +56,16 @@ public class Main {
 		inst.logger.log(Level.INFO, "Dispatching server thread...");
 		server.dispatchServer();
 		
-		Connection con = null;
-		try {
-			con = ConnectionFactory.secureFactory.createConnection("localhost", HOST_PORT);
-			inst.logger.log(Level.INFO, "Created connection to: " + con.getAddress());
-		} catch (IOException e1) {
-			inst.logger.log(Level.SEVERE, "Failed to connect to.", e1);
-		}
-		
-		PrintWriter out = new PrintWriter(con.outputStream());
-		out.println("Hello World!");
+//		Connection con = null;
+//		try {
+//			con = ConnectionFactory.secureFactory.createConnection("localhost", HOST_PORT);
+//			inst.logger.log(Level.INFO, "Created connection to: " + con.getAddress());
+//		} catch (IOException e1) {
+//			inst.logger.log(Level.SEVERE, "Failed to connect to.", e1);
+//		}
+//		
+//		PrintWriter out = new PrintWriter(con.outputStream());
+//		out.println("Hello World!");
 		
 //		try {
 //			server.stop();

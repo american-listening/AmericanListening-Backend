@@ -1,27 +1,20 @@
-[04/30/2019 20:18:21] [INFO] com.americanlistening.main.Main.main: Created instance.
-[04/30/2019 20:18:21] [INFO] com.americanlistening.main.Main.main: Created server on port 1000
-[04/30/2019 20:18:21] [INFO] com.americanlistening.main.Main.main: Dispatching server thread...
-[04/30/2019 20:18:27] [SEVERE] com.americanlistening.main.Main.lambda$0: Server error.javax.net.ssl.SSLException: Connection has been shutdown: javax.net.ssl.SSLHandshakeException: no cipher suites in common
-	at sun.security.ssl.SSLSocketImpl.checkEOF(SSLSocketImpl.java:1541)
-	at sun.security.ssl.SSLSocketImpl.checkWrite(SSLSocketImpl.java:1553)
-	at sun.security.ssl.SSLSocketImpl.startHandshake(SSLSocketImpl.java:1399)
-	at sun.security.ssl.SSLSocketImpl.startHandshake(SSLSocketImpl.java:1387)
+[05/01/2019 09:15:46] [INFO] com.americanlistening.main.Main.main: Created instance.
+[05/01/2019 09:15:46] [INFO] com.americanlistening.main.Main.main: Created server on port 1000
+[05/01/2019 09:15:48] [INFO] com.americanlistening.main.Main.main: Dispatching server thread...
+[05/01/2019 09:16:08] [SEVERE] com.americanlistening.main.Main.lambda$0: Server error.javax.net.ssl.SSLException: Connection has been shutdown: javax.net.ssl.SSLException: Unrecognized SSL message, plaintext connection?
+	at sun.security.ssl.SSLSocketImpl.checkEOF(Unknown Source)
+	at sun.security.ssl.SSLSocketImpl.checkWrite(Unknown Source)
+	at sun.security.ssl.SSLSocketImpl.startHandshake(Unknown Source)
+	at sun.security.ssl.SSLSocketImpl.startHandshake(Unknown Source)
 	at com.americanlistening.core.net.HttpsSecureServer$HttpsSecureServerRun.run(HttpsSecureServer.java:95)
-	at java.lang.Thread.run(Thread.java:748)
-Caused by: javax.net.ssl.SSLHandshakeException: no cipher suites in common
-	at sun.security.ssl.Alerts.getSSLException(Alerts.java:192)
-	at sun.security.ssl.SSLSocketImpl.fatal(SSLSocketImpl.java:1949)
-	at sun.security.ssl.Handshaker.fatalSE(Handshaker.java:302)
-	at sun.security.ssl.Handshaker.fatalSE(Handshaker.java:292)
-	at sun.security.ssl.ServerHandshaker.chooseCipherSuite(ServerHandshaker.java:1045)
-	at sun.security.ssl.ServerHandshaker.clientHello(ServerHandshaker.java:741)
-	at sun.security.ssl.ServerHandshaker.processMessage(ServerHandshaker.java:224)
-	at sun.security.ssl.Handshaker.processLoop(Handshaker.java:1026)
-	at sun.security.ssl.Handshaker.process_record(Handshaker.java:961)
-	at sun.security.ssl.SSLSocketImpl.readRecord(SSLSocketImpl.java:1062)
-	at sun.security.ssl.SSLSocketImpl.performInitialHandshake(SSLSocketImpl.java:1375)
-	at sun.security.ssl.SSLSocketImpl.startHandshake(SSLSocketImpl.java:1403)
-	at sun.security.ssl.SSLSocketImpl.getSession(SSLSocketImpl.java:2267)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: javax.net.ssl.SSLException: Unrecognized SSL message, plaintext connection?
+	at sun.security.ssl.InputRecord.handleUnknownRecord(Unknown Source)
+	at sun.security.ssl.InputRecord.read(Unknown Source)
+	at sun.security.ssl.SSLSocketImpl.readRecord(Unknown Source)
+	at sun.security.ssl.SSLSocketImpl.performInitialHandshake(Unknown Source)
+	at sun.security.ssl.SSLSocketImpl.startHandshake(Unknown Source)
+	at sun.security.ssl.SSLSocketImpl.getSession(Unknown Source)
 	at com.americanlistening.core.net.HttpsSecureServer.printSocketInfo(HttpsSecureServer.java:53)
 	at com.americanlistening.core.net.HttpsSecureServer.access$3(HttpsSecureServer.java:45)
 	at com.americanlistening.core.net.HttpsSecureServer$HttpsSecureServerRun.run(HttpsSecureServer.java:94)

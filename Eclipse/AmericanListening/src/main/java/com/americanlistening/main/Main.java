@@ -20,7 +20,7 @@ public class Main {
 		final InstanceConfiguration config = new InstanceConfiguration();
 		config.args = args;
 		config.debug = true;
-		config.dontWriteCrashFile = true;
+		config.dontWriteCrashFile = false;
 		config.instanceName = "Instance";
 		config.logLevel = Level.FINEST;
 		config.path = null;

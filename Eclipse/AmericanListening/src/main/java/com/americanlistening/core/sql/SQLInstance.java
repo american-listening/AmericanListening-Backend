@@ -20,7 +20,7 @@ public class SQLInstance {
 	 * 
 	 * @return The new SQL Instance.
 	 */
-	public static SQLInstance createInstnace() {
+	public static SQLInstance createInstance() {
 		return new SQLInstance();
 	}
 

@@ -8,22 +8,36 @@ package com.americanlistening.core.memory;
  * @see MemoryHandler
  */
 public final class MemoryObject {
+	
+	/**
+	 * null object.
+	 */
+	public static final MemoryObject NULL_OBJECT;
 
 	/**
 	 * null constant.
 	 */
-	public static final long NULL = 0L;
+	public static final long NULL = 0x0;
 
+	static {
+		NULL_OBJECT = new MemoryObject(null);
+		NULL_OBJECT.address = NULL;
+	}
+	
 	private HandledMemoryObject wrapped;
 	private long address;
+
+	private String[] tags;
 
 	/**
 	 * Creates a new memory object.
 	 * 
-	 * @param wrapped The wrapped handle.
+	 * @param wrapped
+	 *            The wrapped handle.
 	 */
-	public MemoryObject(HandledMemoryObject wrapped) {
+	public MemoryObject(HandledMemoryObject wrapped, String... tags) {
 		this.wrapped = wrapped;
+		this.tags = tags;
 	}
 
 	void setAddress(long address) {
@@ -48,6 +62,22 @@ public final class MemoryObject {
 		return address != NULL || wrapped == null;
 	}
 
+	/**
+	 * Returns whether the object has tag <code>tag</code>.
+	 * 
+	 * @param tag
+	 *            The tag.
+	 * @return <code>true</code> if the object has it and <code>false</code>
+	 *         otherwise.
+	 */
+	public final boolean hasTag(String tag) {
+		for (String t : tags) {
+			if (t.equals(tag))
+				return true;
+		}
+		return false;
+	}
+
 	@Override
 	public void finalize() {
 		try {
@@ -66,7 +96,8 @@ public final class MemoryObject {
 	/**
 	 * Allocates memory on the handler.
 	 * 
-	 * @throws MemoryException When allocation fails.
+	 * @throws MemoryException
+	 *             When allocation fails.
 	 */
 	public void memAlloc() throws MemoryException {
 		if (wrapped == null)
@@ -77,7 +108,8 @@ public final class MemoryObject {
 	/**
 	 * Frees memory on the handler.
 	 * 
-	 * @throws MemoryException When deallocation fails.
+	 * @throws MemoryException
+	 *             When deallocation fails.
 	 */
 	public void memFree() throws MemoryException {
 		if (isNull())

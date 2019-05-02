@@ -5,6 +5,7 @@ import java.util.Random;
 import java.util.logging.Level;
 
 import com.americanlistening.core.net.ServerFactory;
+import com.americanlistening.core.sql.SQLInstance;
 
 /**
  * An instance configuration contains configuration information about how to
@@ -21,6 +22,7 @@ public class InstanceConfiguration implements Cloneable {
 	public String instanceName, path;
 	public Random userGenerator;
 	public long sessionsSeed;
+	public SQLInstance sqlInstance;
 	
 	public ServerFactory serverFactory;
 	
@@ -38,6 +40,7 @@ public class InstanceConfiguration implements Cloneable {
 		config.dontWriteCrashFile = dontWriteCrashFile;
 		config.userGenerator = userGenerator;
 		config.sessionsSeed = sessionsSeed;
+		config.sqlInstance = sqlInstance;
 		config.serverFactory = serverFactory;
 		config.logLevel = logLevel;
 		config.logFile = logFile;

@@ -1,8 +1,13 @@
 package com.americanlistening.core;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.americanlistening.core.memory.HandledMemoryObject;
+import com.americanlistening.core.memory.MemoryAllocator;
+import com.americanlistening.core.memory.MemoryException;
 
 /**
  * Class containing information about a user.
@@ -10,7 +15,7 @@ import java.util.Map;
  * @author Ethan Vrhel
  * @since 1.0
  */
-public class User {
+public class User implements HandledMemoryObject {
 
 	/**
 	 * Unique user id.
@@ -240,5 +245,20 @@ public class User {
 	@Override
 	public String toString() {
 		return "User[id=" + id + ",name=" + username + "]";
+	}
+
+	@Override
+	public void memAlloc(MemoryAllocator allocator) throws MemoryException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void memFree(MemoryAllocator allocator) throws MemoryException {
+		try {
+			UserIO.writeUser(this, null);
+		} catch (IOException e) {
+			throw new MemoryException("Failed to save user (" + e + ").", e);
+		}
 	}
 }

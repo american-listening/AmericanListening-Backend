@@ -18,6 +18,7 @@ import com.americanlistening.core.net.InputCallback;
 import com.americanlistening.core.net.Server;
 import com.americanlistening.core.net.ServerFactory;
 import com.americanlistening.core.net.Sessions;
+import com.americanlistening.core.sql.SQLInstance;
 
 /**
  * An instance is the base functionality class for the platform.
@@ -88,6 +89,8 @@ public class Instance {
 	private Map<Long, Playlist> playlists;
 
 	private Sessions clientSessions;
+	
+	private SQLInstance sqlInstance;
 
 	private Random userGenerator;
 
@@ -120,6 +123,7 @@ public class Instance {
 		this.clientSessions = new Sessions(config.sessionsSeed);
 		if (config.logLevel != null)
 			this.logger.setLevel(config.logLevel);
+		this.sqlInstance = config.sqlInstance;
 		this.config = config.clone();
 		this.commandCallback = new CommandInput(this);
 	}
@@ -336,5 +340,14 @@ public class Instance {
 	 */
 	public boolean shouldWriteCrashFile() {
 		return !dontWriteCrash;
+	}
+	
+	/**
+	 * Returns the current SQL instance.
+	 * 
+	 * @return The current SQL instance.
+	 */
+	public SQLInstance getSQLInstance() {
+		return sqlInstance;
 	}
 }

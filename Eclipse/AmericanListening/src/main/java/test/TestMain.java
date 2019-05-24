@@ -12,6 +12,7 @@ import com.americanlistening.core.User;
 import com.americanlistening.core.net.Connection;
 import com.americanlistening.core.net.ConnectionFactory;
 import com.americanlistening.core.net.Server;
+import com.americanlistening.core.net.ServerFactory;
 
 public class TestMain {
 
@@ -24,6 +25,8 @@ public class TestMain {
 		config.userGenerator = new Random();
 		config.path = null;
 		config.logLevel = Level.ALL;
+		config.serverFactory = ServerFactory.httpServerFactory;
+		config.logFile = "latest.log";
 		
 		Instance inst = Instance.createInstance(config);
 
@@ -40,7 +43,16 @@ public class TestMain {
 		inst.saveAll();
 
 		Server server = null;
+		
+		try {
+			server = ServerFactory.httpServerFactory.createServer(null, 1000);
+			server.init();
+			server.dispatchServer();
+		} catch (IOException e) {
+			System.err.println("ioexception " + e);
+		}
 
+		/*
 		// Create the server on the current instance
 		try {
 			inst.createServer(1000);
@@ -56,6 +68,7 @@ public class TestMain {
 		});
 		server.dispatchServer();
 
+		
 		try {
 			Connection con = ConnectionFactory.secureFactory.createConnection(InetAddress.getByName("localhost"), 1000);
 			inst.logger.log(Level.INFO, "Created client.");
@@ -80,5 +93,6 @@ public class TestMain {
 				inst.logger.log(Level.SEVERE, "Failed to create server.");
 			}
 		}
+		*/
 	}
 }

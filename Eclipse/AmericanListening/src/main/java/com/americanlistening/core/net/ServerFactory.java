@@ -29,6 +29,11 @@ public abstract class ServerFactory {
 	 * Factory for the creation of HTTPS secure servers.
 	 */
 	public static final ServerFactory httpsSecureServerFactory = new HttpsSecureServerFactory();
+	
+	/**
+	 * Factory for the creation of HTTP servers.
+	 */
+	public static final ServerFactory httpServerFactory = new HttpServerFactory();
 
 	private static class SSLServerFactory extends ServerFactory {
 
@@ -56,6 +61,15 @@ public abstract class ServerFactory {
 		@Override
 		public Server createServer(Sessions sessions, int port) throws IOException {
 			return new HttpsSecureServer();
+		}
+
+	}
+	
+	private static class HttpServerFactory extends ServerFactory {
+
+		@Override
+		public Server createServer(Sessions sessions, int port) throws IOException {
+			return new InsecureServer(sessions, port);
 		}
 
 	}

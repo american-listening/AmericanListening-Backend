@@ -1,22 +1,7 @@
-[05/01/2019 09:15:46] [INFO] com.americanlistening.main.Main.main: Created instance.
-[05/01/2019 09:15:46] [INFO] com.americanlistening.main.Main.main: Created server on port 1000
-[05/01/2019 09:15:48] [INFO] com.americanlistening.main.Main.main: Dispatching server thread...
-[05/01/2019 09:16:08] [SEVERE] com.americanlistening.main.Main.lambda$0: Server error.javax.net.ssl.SSLException: Connection has been shutdown: javax.net.ssl.SSLException: Unrecognized SSL message, plaintext connection?
-	at sun.security.ssl.SSLSocketImpl.checkEOF(Unknown Source)
-	at sun.security.ssl.SSLSocketImpl.checkWrite(Unknown Source)
-	at sun.security.ssl.SSLSocketImpl.startHandshake(Unknown Source)
-	at sun.security.ssl.SSLSocketImpl.startHandshake(Unknown Source)
-	at com.americanlistening.core.net.HttpsSecureServer$HttpsSecureServerRun.run(HttpsSecureServer.java:95)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: javax.net.ssl.SSLException: Unrecognized SSL message, plaintext connection?
-	at sun.security.ssl.InputRecord.handleUnknownRecord(Unknown Source)
-	at sun.security.ssl.InputRecord.read(Unknown Source)
-	at sun.security.ssl.SSLSocketImpl.readRecord(Unknown Source)
-	at sun.security.ssl.SSLSocketImpl.performInitialHandshake(Unknown Source)
-	at sun.security.ssl.SSLSocketImpl.startHandshake(Unknown Source)
-	at sun.security.ssl.SSLSocketImpl.getSession(Unknown Source)
-	at com.americanlistening.core.net.HttpsSecureServer.printSocketInfo(HttpsSecureServer.java:53)
-	at com.americanlistening.core.net.HttpsSecureServer.access$3(HttpsSecureServer.java:45)
-	at com.americanlistening.core.net.HttpsSecureServer$HttpsSecureServerRun.run(HttpsSecureServer.java:94)
-	... 1 more
-
+[05/24/2019 14:59:58] [WARNING] com.americanlistening.core.Instance.load: null user loaded.
+[05/24/2019 14:59:58] [WARNING] com.americanlistening.core.Instance.load: null user loaded.
+[05/24/2019 14:59:58] [INFO] test.TestMain.main: loaded!
+[05/24/2019 14:59:58] [FINER] com.americanlistening.core.Instance.createUser: Created user with id 8027575235944527231
+[05/24/2019 14:59:58] [INFO] test.TestMain.main: User[id=8027575235944527231,name=null]
+[05/24/2019 14:59:58] [INFO] com.americanlistening.core.Instance.saveAll: Saved 1 users.
+[05/24/2019 14:59:58] [INFO] com.americanlistening.core.Instance.saveAll: Saved 0 playlists.

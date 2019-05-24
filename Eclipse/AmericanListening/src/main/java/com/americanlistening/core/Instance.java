@@ -54,6 +54,7 @@ public class Instance {
 		defaultConfiguration.sessionsSeed = 0L;
 		defaultConfiguration.userGenerator = new Random();
 		defaultConfiguration.logLevel = Level.WARNING;
+		defaultConfiguration.logFile = "latest.log";
 	}
 
 	/**

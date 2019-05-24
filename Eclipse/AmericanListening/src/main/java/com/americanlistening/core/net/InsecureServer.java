@@ -3,7 +3,10 @@ package com.americanlistening.core.net;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,9 +15,14 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
+/**
+ * An Insecure Server is an implementation of a HTTP Server. The connections
+ * through this server are not secure.
+ * 
+ * @author Ethan Vrhel
+ * @since 1.0
+ */
 class InsecureServer implements Server {
-
-	private static volatile int scid = 0;
 
 	private Map<String, Object> props;
 
@@ -55,9 +63,11 @@ class InsecureServer implements Server {
 			String response = "<html><h1>Hello this is a test!</h1><p>This is HTML!</p><p><a href=\"https://www.twitter.com\">This is a link</a></p></html>";
 			long threadId = Thread.currentThread().getId();
 			System.out.println(t.getProtocol() + " connection from: " + t.getRemoteAddress());
-			response = response + "DEBUG: Thread ID: " + threadId + ", Protocol: "
-					+ t.getProtocol() + ", Request Method: " + t.getRequestMethod() + ", Your IP: "
-					+ t.getRemoteAddress() + ", Server IP: " + t.getLocalAddress() + ", Response Code: " + t.getResponseCode();
+			DateFormat format = new SimpleDateFormat("MM/dd/YYYY HH:mm:ss");
+			Date date = new Date();
+			response = response + "DEBUG: Thread ID: " + threadId + ", Protocol: " + t.getProtocol()
+					+ ", Request Method: " + t.getRequestMethod() + ", Your IP: " + t.getRemoteAddress()
+					+ ", Server IP: " + t.getLocalAddress() + ", Response Code: " + t.getResponseCode() + ", Server Time: " + format.format(date);
 			t.sendResponseHeaders(200, response.length());
 			OutputStream os = t.getResponseBody();
 			os.write(response.getBytes());

@@ -44,7 +44,7 @@ class InsecureServer implements Server {
 
 		@Override
 		public void run() {
-	
+
 		}
 
 		@Override
@@ -52,14 +52,16 @@ class InsecureServer implements Server {
 			for (ConnectionCallback c : cCalls) {
 				c.onConnect(null);
 			}
-			String response = "This is the response";
-            long threadId = Thread.currentThread().getId();
-            System.out.println("I am thread " + threadId );
-            response = response + "Thread Id = "+threadId;
-            t.sendResponseHeaders(200, response.length());
-            OutputStream os = t.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
+			String response = "<html><h1>Hello this is a test!</h1><p>This is HTML!</p><p><a href=\"https://www.twitter.com\">This is a link</a></p></html>";
+			long threadId = Thread.currentThread().getId();
+			System.out.println(t.getProtocol() + " connection from: " + t.getRemoteAddress());
+			response = response + "DEBUG: Thread ID: " + threadId + ", Protocol: "
+					+ t.getProtocol() + ", Request Method: " + t.getRequestMethod() + ", Your IP: "
+					+ t.getRemoteAddress() + ", Server IP: " + t.getLocalAddress() + ", Response Code: " + t.getResponseCode();
+			t.sendResponseHeaders(200, response.length());
+			OutputStream os = t.getResponseBody();
+			os.write(response.getBytes());
+			os.close();
 		}
 
 	}
